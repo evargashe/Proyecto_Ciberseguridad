@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Trust Store Edge</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+
+</head>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+
+<body>
+    <h1 style="text-align: center;">Edge Trust Store Certificates</h1>
+
+    <table class="table table-dark" id="myTable" style="width:100%">
+        <thead>
+            <tr>
+                <th>Human Friendly</th>
+                <th>Serial Number</th>
+                <th>Valid Before || Valid After</th>
+                <th>Public Key Algorithm</th>
+                <th>Public Key Bit Size</th>
+                <th>Sha</th>
+                <!-- <th>Key usage value</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in certificate %}
+            <tr class="table-active">
+                <td>{{ i.subject.human_friendly }}</td>
+                <td>{{ i.serial_number }}</td>
+                <td>{{ i.not_valid_before }} , {{ i.not_valid_after }} </td>
+                <td>{{ i.public_key.algorithm }}</td>
+                <td>{{ i.public_key.bit_size }}</td>
+                <td>{{ i.sha1_fingerprint }}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+    <div style="text-align: center;">
+        <a href="http://127.0.0.1:5000/" class="btn btn-primary btn-md" >Volver al inicio</a>
+    </div>
+    
+    <div class="row text-center">
+        <div class="col-4">
+            <a href="/TrustStoreMozilla" class="btn btn-outline-success">Ver Mozila Trust Store</a>
+        </div>
+        <div class="col-4">
+            <a href="/TrustStoreEdge" class="btn btn-outline-success">Ver Microsoft Edge Trust Store</a>
+        </div>
+        <div class="col-4">
+            <a href="/TrustStoreChrome" class="btn btn-outline-success">Ver Chrome Trust Store</a>
+        </div>
+    </div>
+</body>
+
+</html>

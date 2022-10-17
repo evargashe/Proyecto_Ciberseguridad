@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<form>
+    <div class="form-group">
+        <label for="inputAddress">Certificate SSL</label>
+        <textarea cols="90" rows="10">{{ cert }}</textarea>
+    </div>
+    <div class="form-row">
+        <label for="">Certificate Root</label>
+        <div class="form-group col-md-2">
+            <input type="text" class="form-control" id="inputEmail4" placeholder="Email" value="{{root1}}">
+        </div>
+        <div class="form-group col-md-2">
+            <input type="text" class="form-control" id="inputPassword4" placeholder="Password" value="{{root2}}">
+        </div>
+        <div class="form-group col-md-2">
+            <input type="text" class="form-control" id="inputPassword4" placeholder="Password" value="{{ root3 }}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputAddress">Verificate Repository</label>
+        <input type="text" class="form-control" id="inputAddress" value="{{ verificar }}">
+    </div>
+    
+</form>
+
+
+<div>
+<div style="text-align: center;">
+    <a href="http://127.0.0.1:5000/" class="btn btn-primary btn-md">Limpiar</a>
+</div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{% endblock %}

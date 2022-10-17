@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>A Web Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
+    <script src="{{ url_for('static', filename='js/prueba.js')}}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    {% for category,message in messages %}
+    {% if category == 'error'%}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <span>{{ message }}</span>
+        <META HTTP-EQUIV="REFRESH" CONTENT="3;URL=http://127.0.0.1:5000/">
+    </div>
+    {% endif %}
+    {% if category == 'success'%}
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" data-dismiss="alert" class="close">&times;</button>
+        <span>{{ message }}</span>
+    </div>
+    {% endif %}
+    {% if category == 'danger'%}
+    <div class="alert alert-danger" role="alert">
+        <span>{{ message }}</span>
+        <META HTTP-EQUIV="REFRESH" CONTENT="3;URL=http://127.0.0.1:5000/">
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <h1 style="text-align: center">Digital Certificates Trust Verifier</h1>
+
+    <form action="/validate" method="POST">
+        <div class="row text-center" id="container">
+            <div class="col-4">
+                <input class="containerInputUrl" type="text" name="url" id="url"
+                placeholder="[ingresar  URL a verificar ...]" />
+            </div>
+            <div class="col-4">
+                <button class="containerInputButton1 btn btn-primary btn-sm">Validate</button>
+            </div>
+            
+        </div>
+    </form>
+    <div class="formContainer">
+        <form action="/uploadFile" method="POST" enctype="multipart/form-data">
+            <p><input type="file" name="file"></p>
+            <p><input type="submit" value="Submit" class="btn btn-secondary btn-sm button-file"></p>
+        </form>
+    </div>
+    
+
+    <div class="container2">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+    <div class="row text-center">
+        <div class="col-4">
+            <a href="/TrustStoreMozilla" class="btn btn-outline-success">Ver Mozila Trust Store</a>
+        </div>
+        <div class="col-4">
+            <a href="/TrustStoreEdge" class="btn btn-outline-success">Ver Microsoft Edge Trust Store</a>
+        </div>
+        <div class="col-4">
+            <a href="/TrustStoreChrome" class="btn btn-outline-success">Ver Chrome Trust Store</a>
+        </div>
+    </div>
+</body>
+
+</html>
