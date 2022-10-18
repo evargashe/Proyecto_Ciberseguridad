@@ -48,7 +48,8 @@ def certificatessl(host):
     port = "443"
     address = (host, port)
     # Retrieve the server certificate and validate
-    cert = ssl.get_server_certificate(address, ca_certs=os.path.relpath(certifi.where()))
+    #cert = ssl.get_server_certificate(address, ca_certs=os.path.relpath(certifi.where()))
+    cert = ssl.get_server_certificate(address)
     return cert
 
 #Certificate root
@@ -94,6 +95,9 @@ def verificateReporitory(url):
         bool_mozilla=False,
         bool_chrome=False,
         bool_edge=False,
+        level_mozilla=1,
+        level_chrome=1,
+        level_edge=1,
     )
     try:
         connection = tls.TLSSocket(url, 443, session=tls.TLSSession(manual_validation=True))
@@ -211,7 +215,10 @@ def uploadFile():
                     print(cert)
                     print(root)
                     print(verificar)
-        return render_template('uploadFile.html', s = urls, lista=lista, verificar=verificar)
+        return render_template('uploadFile.html', s = urls, lista=lista, verificar=verificar,
+                level_chrome= verificar.get('level_chrome'),
+                level_edge= verificar.get('level_edge'),
+                level_mozilla = verificar.get('level_mozilla'))
     elif f == '':
         flash('Ingrese un texto plano','texto')
         return redirect('/')
