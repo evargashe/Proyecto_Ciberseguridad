@@ -7,9 +7,6 @@ import re
 import ssl, os
 import certifi
 
-from oscrypto import tls
-from certvalidator import CertificateValidator, errors
-
 
 import os
 import re
@@ -97,9 +94,6 @@ def verificateReporitory(url):
         bool_mozilla=False,
         bool_chrome=False,
         bool_edge=False,
-        mozillaTrustLevel=1,
-        chromeTrustLevel=1,
-        edgeTrustLevel=1,
     )
     try:
         connection = tls.TLSSocket(url, 443, session=tls.TLSSession(manual_validation=True))
@@ -107,7 +101,6 @@ def verificateReporitory(url):
         return 'has not certificate digital'
     
     validator = CertificateValidator(connection.certificate, connection.intermediates)
-
     certification_chain = validator.validate_tls(connection.hostname)
     root_certificate = certification_chain[0]
     root = root_certificate.key_identifier_value
@@ -115,7 +108,7 @@ def verificateReporitory(url):
 
     for mozilla_certificate in CERT.get('mozillaCertificates'):
         certificates = mozilla_certificate.key_identifier_value
-        if root == certificates:
+        if  certificates == root:
             dataCertificate.update({'bool_mozilla': True})
 
     for chrome_certificate in CERT.get('chromeCertificates'):
@@ -154,8 +147,7 @@ def validate():
                 flash("the url was validated successfully","success")
                 return render_template(
                 'validate.html', sn = si, url = url ,cert = cert, 
-                root1 = hex(root.__getitem__(0).serial_number), root2 = hex(root.__getitem__(1).serial_number) , 
-                root3 = hex(root.__getitem__(2).serial_number), 
+                root1 = hex(root.__getitem__(0).serial_number), root2 = hex(root.__getitem__(1).serial_number),  
                 verificar = verificar)
                 """ verificar = verificar.get('bool_mozilla') """
             else:
@@ -216,7 +208,10 @@ def uploadFile():
                     lista.append(hex(root.__getitem__(2).serial_number))
                     lista.append(verificar)
                     urls.append(line)
-        return render_template('uploadFile.html', s = urls, lista=lista)
+                    print(cert)
+                    print(root)
+                    print(verificar)
+        return render_template('uploadFile.html', s = urls, lista=lista, verificar=verificar)
     elif f == '':
         flash('Ingrese un texto plano','texto')
         return redirect('/')
