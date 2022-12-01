@@ -13,6 +13,11 @@ cd Fkask_Ciber/app
 pip install -r requerimientos.txt
 ```
 
+Levantar el servidor
+
+```
+cd env/Scripts/activate.bat
+```
 
 Ejecutar  la aplicacion
 
